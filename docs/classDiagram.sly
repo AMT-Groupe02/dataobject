@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
+<classDiagram>
+  <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="">
+    <entity entityType="CLASS" id="310" isAbstract="false" name="Label" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="confidence" type="Float" visibility="PRIVATE"/>
+    </entity>
+    <inheritance id="182">
+      <child>181</child>
+      <parent>180</parent>
+    </inheritance>
+    <entity entityType="CLASS" id="181" isAbstract="false" name="AwsCreds" visibility="PUBLIC"/>
+    <entity entityType="INTERFACE" id="180" isAbstract="true" name="Creds" visibility="PUBLIC"/>
+    <inheritance id="179">
+      <child>178</child>
+      <parent>177</parent>
+    </inheritance>
+    <entity entityType="CLASS" id="178" isAbstract="false" name="AwsRegion" visibility="PUBLIC"/>
+    <entity entityType="INTERFACE" id="177" isAbstract="true" name="Region" visibility="PUBLIC"/>
+    <association aggregation="COMPOSE" direction="BIDIRECTIONAL" id="24" name="">
+      <role componentId="1" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+      <role componentId="3" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+    </association>
+    <association aggregation="COMPOSE" direction="BIDIRECTIONAL" id="10" name="">
+      <role componentId="1" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+      <role componentId="2" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+    </association>
+    <inheritance id="9">
+      <child>3</child>
+      <parent>8</parent>
+    </inheritance>
+    <entity entityType="INTERFACE" id="8" isAbstract="true" name="IDataObjectHelper" visibility="PUBLIC">
+      <method isAbstract="true" isStatic="false" name="createBucket" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="name" type="String"/>
+      </method>
+      <method isAbstract="true" isStatic="false" name="bucketExists" returnType="boolean" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="name" type="String"/>
+      </method>
+      <method isAbstract="true" isStatic="false" name="uploadImageInBucket" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="imageFile" type="File"/>
+        <variable const="false" name="bucketName" type="String"/>
+      </method>
+    </entity>
+    <inheritance id="7">
+      <child>1</child>
+      <parent>6</parent>
+    </inheritance>
+    <entity entityType="INTERFACE" id="6" isAbstract="true" name="ICloudClient" visibility="PUBLIC">
+      <method isAbstract="true" isStatic="false" name="setRegion" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="region" type="String"/>
+      </method>
+    </entity>
+    <inheritance id="5">
+      <child>2</child>
+      <parent>4</parent>
+    </inheritance>
+    <entity entityType="INTERFACE" id="4" isAbstract="true" name="ILabelDetector" visibility="PUBLIC">
+      <method isAbstract="true" isStatic="false" name="getLabelsFromImage" returnType="Label[]" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="imageKey" type="String"/>
+      </method>
+    </entity>
+    <entity entityType="CLASS" id="3" isAbstract="false" name="AwsDataObjectHelperImpl" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="2" isAbstract="false" name="AwsLabelDetectorHelperImpl" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="1" isAbstract="false" name="AwsCloudClient" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="AwsCloudClient" returnType="" view="DEFAULT" visibility="PRIVATE"/>
+      <method isAbstract="false" isStatic="false" name="getInstance" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getLabelsFromImage" returnType="Label[]" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+  </diagramElements>
+  <umlView grid="10" name="Main view" open="true">
+    <relationView color="-12566464" relationId="5">
+      <line>
+        <point>
+          <x>341</x>
+          <y>501</y>
+        </point>
+        <point>
+          <x>341</x>
+          <y>395</y>
+        </point>
+      </line>
+    </relationView>
+    <relationView color="-12566464" relationId="7">
+      <line>
+        <point>
+          <x>801</x>
+          <y>351</y>
+        </point>
+        <point>
+          <x>801</x>
+          <y>155</y>
+        </point>
+      </line>
+    </relationView>
+    <relationView color="-12566464" relationId="10">
+      <line>
+        <point>
+          <x>681</x>
+          <y>411</y>
+        </point>
+        <point>
+          <x>461</x>
+          <y>511</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>575</x>
+        <y>465</y>
+        <w>0</w>
+        <h>16</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>685</x>
+        <y>415</y>
+        <w>0</w>
+        <h>16</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>465</x>
+        <y>489</y>
+        <w>0</w>
+        <h>16</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>667</x>
+        <y>415</y>
+        <w>8</w>
+        <h>16</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>447</x>
+        <y>463</y>
+        <w>8</w>
+        <h>16</h>
+      </multipliciteAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="24">
+      <line>
+        <point>
+          <x>911</x>
+          <y>451</y>
+        </point>
+        <point>
+          <x>991</x>
+          <y>501</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>955</x>
+        <y>480</y>
+        <w>0</w>
+        <h>16</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>915</x>
+        <y>455</y>
+        <w>0</w>
+        <h>16</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>995</x>
+        <y>479</y>
+        <w>0</w>
+        <h>16</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>897</x>
+        <y>455</y>
+        <w>8</w>
+        <h>16</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>977</x>
+        <y>479</y>
+        <w>8</w>
+        <h>16</h>
+      </multipliciteAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="9">
+      <line>
+        <point>
+          <x>1081</x>
+          <y>501</y>
+        </point>
+        <point>
+          <x>1081</x>
+          <y>435</y>
+        </point>
+      </line>
+    </relationView>
+    <componentView color="-2079" componentID="1" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>680</x>
+        <y>350</y>
+        <w>240</w>
+        <h>100</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="2" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>220</x>
+        <y>500</y>
+        <w>240</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="3" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>980</x>
+        <y>500</y>
+        <w>210</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="4" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>180</x>
+        <y>310</y>
+        <w>310</w>
+        <h>84</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="6" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>730</x>
+        <y>70</y>
+        <w>220</w>
+        <h>84</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="310" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>520</x>
+        <y>200</y>
+        <w>150</w>
+        <h>85</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="8" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>1010</x>
+        <y>320</y>
+        <w>380</w>
+        <h>114</h>
+      </geometry>
+    </componentView>
+  </umlView>
+</classDiagram>
