@@ -7,6 +7,8 @@ import software.amazon.awssdk.regions.Region;
 public class AwsCloudClient implements ICloudClient {
     static AwsCloudClient instance = null;
     AwsCredentialsProvider credentialsProvider;
+    AwsLabelDetectorHelper labelDetectorHelper;
+
     Region region;
     public static AwsCloudClient getInstance(){
         if(instance == null){
@@ -17,6 +19,7 @@ public class AwsCloudClient implements ICloudClient {
 
     private AwsCloudClient() {
         credentialsProvider = EnvironmentVariableCredentialsProvider.create();
+        labelDetectorHelper = new AwsLabelDetectorHelper();
         region = Region.EU_WEST_1;
     }
 
@@ -26,5 +29,11 @@ public class AwsCloudClient implements ICloudClient {
 
     public Region getRegion() {
         return region;
+    }
+
+
+    @Override
+    public ILabelDetector getLabelDetector() {
+        return labelDetectorHelper;
     }
 }
