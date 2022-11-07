@@ -9,11 +9,11 @@ public class LabelObj {
     private List<InstanceObj> instances;
     private List<String> parents;
 
-    public LabelObj(String name, float confidence) {
+    public LabelObj(String name, float confidence, List<InstanceObj> instances, List<String> parents) {
         this.name = name;
         this.confidence = confidence;
-        this.instances = new LinkedList<>();
-        this.parents = new LinkedList<>();
+        this.instances = instances;
+        this.parents = parents;
     }
 
     public String getName() {
@@ -25,14 +25,14 @@ public class LabelObj {
     }
 
     public List<InstanceObj> getInstances() {
-        return instances;
+        return instances; //TODO faire une copie?
     }
 
     public List<String> getParents() {
         return parents;
     }
 
-    public class InstanceObj {
+    public static class InstanceObj {
         private double confidence;
         private BoundingBoxObj boundingBox;
 
@@ -42,7 +42,7 @@ public class LabelObj {
         }
 
 
-        public class BoundingBoxObj {
+        public static class BoundingBoxObj {
             private double width;
             private double height;
             private double left;

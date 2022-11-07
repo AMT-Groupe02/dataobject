@@ -3,11 +3,23 @@ package ch.amt.dataobject;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.rekognition.RekognitionClient;
 
 public class AwsCloudClient implements ICloudClient {
     static AwsCloudClient instance = null;
     AwsCredentialsProvider credentialsProvider;
-    AwsLabelDetectorHelper labelDetectorHelper;
+    private AwsLabelDetectorHelper labelDetectorHelper;
+    private RekognitionClient rekognitionClient = new RekognitionClient() {
+        @Override
+        public String serviceName() {
+            return null;
+        }
+
+        @Override
+        public void close() {
+
+        }
+    };
 
     Region region;
     public static AwsCloudClient getInstance(){
@@ -35,5 +47,9 @@ public class AwsCloudClient implements ICloudClient {
     @Override
     public ILabelDetector getLabelDetector() {
         return labelDetectorHelper;
+    }
+
+    RekognitionClient getRekognitionClient() {
+        return rekognitionClient;
     }
 }
