@@ -1,5 +1,6 @@
 package ch.amt.dataobject;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,14 @@ class AwsDataObjectHelperImplTest {
         AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
         if(awsDataObjectHelper.bucketExists(bucketName)){
             awsDataObjectHelper.deleteBucket(bucketName);
+        }
+    }
+
+    @AfterAll
+    static void afterAll(){
+        AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
+        if(!awsDataObjectHelper.bucketExists(bucketName)){
+            awsDataObjectHelper.createBucket(bucketName);
         }
     }
 
