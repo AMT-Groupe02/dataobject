@@ -1,4 +1,6 @@
 package ch.amt.dataobject;
+import ch.amt.dataobject.aws.AwsCloudClient;
+import ch.amt.dataobject.aws.AwsDataObjectHelperImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,6 @@
-package ch.amt.dataobject;
+package ch.amt.dataobject.aws;
 
+import ch.amt.dataobject.IDataObjectHelper;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -8,7 +9,6 @@ import software.amazon.awssdk.services.s3.waiters.S3Waiter;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 
 public class AwsDataObjectHelperImpl implements IDataObjectHelper {
