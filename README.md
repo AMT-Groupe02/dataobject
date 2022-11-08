@@ -1,10 +1,14 @@
 # dataobject
 
+## Compilation
+
 ## Tests
 Nous utilisons Junit 5 pour les tests unitaires. Pour lancer les tests, il faut lancer la commande suivante :
 ```bash
+mvn dependency:resolve
 mvn -AWS_ACCESS_KEY_ID={ID} -AWS_SECRET_ACCESS_KEY={SECRET} test
 ```
+N'oubliez pas de remplacer {ID} et {SECRET} par vos identifiants AWS.
 
 ## Structure du projet
 ```
