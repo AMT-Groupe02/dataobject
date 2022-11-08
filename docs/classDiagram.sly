@@ -56,9 +56,15 @@
       <method isAbstract="true" isStatic="false" name="bucketExists" returnType="boolean" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="name" type="String"/>
       </method>
-      <method isAbstract="true" isStatic="false" name="uploadImageInBucket" returnType="void" view="DEFAULT" visibility="PUBLIC">
-        <variable const="false" name="imageFile" type="File"/>
+      <method isAbstract="true" isStatic="false" name="uploadFileInBucket" returnType="String" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="fileB64" type="String"/>
         <variable const="false" name="bucketName" type="String"/>
+      </method>
+      <method isAbstract="true" isStatic="false" name="deleteFileInBucket" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="key" type="String"/>
+      </method>
+      <method isAbstract="true" isStatic="false" name="getFileInBucket" returnType="File" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="key" type="String"/>
       </method>
     </entity>
     <inheritance id="7">
@@ -84,7 +90,6 @@
     <entity entityType="CLASS" id="1" isAbstract="false" name="AwsCloudClient" visibility="PUBLIC">
       <method is-constructor="true" isAbstract="false" isStatic="false" name="AwsCloudClient" returnType="" view="DEFAULT" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="getInstance" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="false" isStatic="false" name="getLabelsFromImage" returnType="Label[]" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
   </diagramElements>
   <umlView grid="10" name="Main view" open="true">
@@ -157,8 +162,8 @@
     <relationView color="-12566464" relationId="24">
       <line>
         <point>
-          <x>911</x>
-          <y>451</y>
+          <x>881</x>
+          <y>436</y>
         </point>
         <point>
           <x>991</x>
@@ -166,14 +171,14 @@
         </point>
       </line>
       <labelAssociation>
-        <x>955</x>
-        <y>480</y>
+        <x>940</x>
+        <y>472</y>
         <w>0</w>
         <h>16</h>
       </labelAssociation>
       <roleAssociation>
-        <x>915</x>
-        <y>455</y>
+        <x>885</x>
+        <y>440</y>
         <w>0</w>
         <h>16</h>
       </roleAssociation>
@@ -184,8 +189,8 @@
         <h>16</h>
       </roleAssociation>
       <multipliciteAssociation>
-        <x>897</x>
-        <y>455</y>
+        <x>867</x>
+        <y>440</y>
         <w>8</w>
         <h>16</h>
       </multipliciteAssociation>
@@ -204,7 +209,7 @@
         </point>
         <point>
           <x>1081</x>
-          <y>435</y>
+          <y>445</y>
         </point>
       </line>
     </relationView>
@@ -213,7 +218,7 @@
         <x>680</x>
         <y>350</y>
         <w>240</w>
-        <h>100</h>
+        <h>85</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="2" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -259,10 +264,28 @@
     <componentView color="-2079" componentID="8" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>1010</x>
-        <y>320</y>
+        <y>300</y>
         <w>380</w>
-        <h>114</h>
+        <h>144</h>
       </geometry>
     </componentView>
+    <note color="-2079" content="uploadFileInbucket retoure un url">
+      <noteGeometry>
+        <x>1510</x>
+        <y>360</y>
+        <w>127</w>
+        <h>45</h>
+      </noteGeometry>
+      <noteLine color="-12566464" relationId="8">
+        <point>
+          <x>1511</x>
+          <y>401</y>
+        </point>
+        <point>
+          <x>1391</x>
+          <y>421</y>
+        </point>
+      </noteLine>
+    </note>
   </umlView>
 </classDiagram>
