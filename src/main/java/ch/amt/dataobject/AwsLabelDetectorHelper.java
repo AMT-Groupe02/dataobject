@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AwsLabelDetectorHelper implements ILabelDetector {
     @Override
-    public List<LabelObj> getLabelsFromImage(String imageKey) {
+    public List<LabelObj> getLabelsFromImage(String bucketName, String imageKey) {
         String bucket = "gnagna"; //TODO modifier
 
         try {
