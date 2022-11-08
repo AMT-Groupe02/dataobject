@@ -6,7 +6,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
 
 public class AwsCloudClient implements ICloudClient {
-    static AwsCloudClient instance = null;
+    private static AwsCloudClient instance = null;
     AwsCredentialsProvider credentialsProvider;
     private AwsLabelDetectorHelper labelDetectorHelper;
     private RekognitionClient rekognitionClient = new RekognitionClient() {
@@ -32,7 +32,7 @@ public class AwsCloudClient implements ICloudClient {
     private AwsCloudClient() {
         credentialsProvider = EnvironmentVariableCredentialsProvider.create();
         labelDetectorHelper = new AwsLabelDetectorHelper();
-        region = Region.EU_WEST_1;
+        region = Region.EU_WEST_2;
     }
 
     public AwsCredentialsProvider getCredentialsProvider() {

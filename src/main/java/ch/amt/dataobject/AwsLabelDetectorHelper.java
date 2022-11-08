@@ -7,12 +7,11 @@ import java.util.List;
 public class AwsLabelDetectorHelper implements ILabelDetector {
     @Override
     public List<LabelObj> getLabelsFromImage(String bucketName, String imageKey) {
-        String bucket = "gnagna"; //TODO modifier
 
         try {
             DetectLabelsRequest detectLabelsRequest = DetectLabelsRequest.builder().image(
                     Image.builder().s3Object(
-                            S3Object.builder().name(imageKey).bucket(bucket).build()).build()).build();
+                            S3Object.builder().name(imageKey).bucket(bucketName).build()).build()).build();
 
             DetectLabelsResponse labelsResponse = AwsCloudClient.getInstance().getRekognitionClient().detectLabels(detectLabelsRequest);
             List<Label> labels = labelsResponse.labels();
