@@ -6,7 +6,9 @@
 Nous utilisons Junit 5 pour les tests unitaires. Pour lancer les tests, il faut lancer la commande suivante :
 ```bash
 mvn dependency:resolve
-mvn -AWS_ACCESS_KEY_ID={ID} -AWS_SECRET_ACCESS_KEY={SECRET} test
+export AWS_ACCESS_KEY_ID=<aws_access_key>
+export AWS_SECRET_ACCESS_KEY=<aws_secret_access_key>
+mvn test
 ```
 N'oubliez pas de remplacer {ID} et {SECRET} par vos identifiants AWS.
 
