@@ -5,7 +5,9 @@ Les étapes ci-dessous sont à faire depuis le dossier racine du projet.
 
 ## Collaborateurs
 Développeurs : Luca Coduri & Chloé Fontaine
+
 Professeur : Nicolas Glassey
+
 Assistant : Adrien Allemand
 
 ## Prérequis
