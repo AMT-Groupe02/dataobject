@@ -1,5 +1,6 @@
 package ch.amt.dataobject;
 
+import software.amazon.awssdk.services.rekognition.RekognitionClient;
 import software.amazon.awssdk.services.rekognition.model.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,12 +9,13 @@ public class AwsLabelDetectorHelper implements ILabelDetector {
     @Override
     public List<LabelObj> getLabelsFromImage(String bucketName, String imageKey) {
 
-        try {
+        try(RekognitionClient rekClient = RekognitionClient.builder().credentialsProvider(AwsCloudClient.getInstance().getCredentialsProvider()).region(AwsCloudClient.getInstance().getRegion()).build()) {
+
             DetectLabelsRequest detectLabelsRequest = DetectLabelsRequest.builder().image(
                     Image.builder().s3Object(
                             S3Object.builder().name(imageKey).bucket(bucketName).build()).build()).build();
 
-            DetectLabelsResponse labelsResponse = AwsCloudClient.getInstance().getRekognitionClient().detectLabels(detectLabelsRequest);
+            DetectLabelsResponse labelsResponse = rekClient.detectLabels(detectLabelsRequest);
             List<Label> labels = labelsResponse.labels();
             System.out.println("Detected labels for the given photo");
             for (Label label: labels) {
