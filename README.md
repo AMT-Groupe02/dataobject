@@ -1,6 +1,15 @@
 # dataobject
 
 ## Compilation
+```bash
+ mvn package -Dmaven.test.skip
+```
+## Run
+```bash
+export AWS_ACCESS_KEY_ID=<aws_access_key>
+export AWS_SECRET_ACCESS_KEY=<aws_secret_access_key>
+java -jar target/dataobject-1.0-SNAPSHOT.jar
+```
 
 ## Tests
 Nous utilisons Junit 5 pour les tests unitaires. Pour lancer les tests, il faut lancer la commande suivante :
