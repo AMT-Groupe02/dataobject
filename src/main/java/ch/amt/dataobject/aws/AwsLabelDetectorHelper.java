@@ -8,10 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AwsLabelDetectorHelper implements ILabelDetector {
+    private static final AwsCloudClient awsClient = AwsCloudClient.getInstance();
+
     @Override
     public List<LabelObj> getLabelsFromImage(String bucketName, String imageKey) {
 
-        try(RekognitionClient rekClient = RekognitionClient.builder().credentialsProvider(AwsCloudClient.getInstance().getCredentialsProvider()).region(AwsCloudClient.getInstance().getRegion()).build()) {
+        try(RekognitionClient rekClient = RekognitionClient.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
 
             DetectLabelsRequest detectLabelsRequest = DetectLabelsRequest.builder().image(
                     Image.builder().s3Object(
