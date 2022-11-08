@@ -7,5 +7,7 @@ public interface IDataObjectHelper {
 
     void deleteBucket(String bucketName);
     boolean bucketExists(String bucketName);
-    void uploadImageInBucket(String bucketName, File image);
+    void uploadImageInBucket(String bucketName, String fileName, String base64Data, String contentType);
+
+    boolean imageExistsInBucket(String bucketName, String imageName);
 }

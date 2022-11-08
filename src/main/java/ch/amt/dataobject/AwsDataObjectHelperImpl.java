@@ -1,12 +1,15 @@
 package ch.amt.dataobject;
 
+import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.waiters.S3Waiter;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 
 public class AwsDataObjectHelperImpl implements IDataObjectHelper {
     private static final AwsCloudClient awsClient = AwsCloudClient.getInstance();
@@ -38,6 +41,8 @@ public class AwsDataObjectHelperImpl implements IDataObjectHelper {
     public void deleteBucket(String bucketName) {
         try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
 
+            S3Waiter waiter = s3.waiter();
+
             ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
                     .bucket(bucketName)
                     .build();
@@ -59,8 +64,14 @@ public class AwsDataObjectHelperImpl implements IDataObjectHelper {
                     .build();
             s3.deleteBucket(deleteBucketRequest);
 
-        }catch (Exception e){
-            e.printStackTrace();
+            HeadBucketRequest bucketRequestWait = HeadBucketRequest.builder()
+                    .bucket(bucketName)
+                    .build();
+
+            WaiterResponse<HeadBucketResponse> waiterResponse = waiter.waitUntilBucketNotExists(bucketRequestWait);
+            waiterResponse.matched().response().ifPresent(System.out::println);
+            System.out.println(bucketName +" is deleted");
+
         }
     }
 
@@ -77,14 +88,39 @@ public class AwsDataObjectHelperImpl implements IDataObjectHelper {
                 }
             }
 
-        }catch (Exception e){
-            e.printStackTrace();
         }
         return false;
     }
 
     @Override
-    public void uploadImageInBucket(String bucketName, File image) {
+    public void uploadImageInBucket(String bucketName, String fileName, String base64Data, String contentType) {
+        try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
 
+            byte[] bI = java.util.Base64.getDecoder().decode(base64Data);
+            InputStream fis = new ByteArrayInputStream(bI);
+
+            s3.putObject(PutObjectRequest.builder().bucket(bucketName).key(fileName)
+                            .contentType(contentType)
+                            .contentLength((long) bI.length)
+                            .build(),
+                    RequestBody.fromInputStream(fis, bI.length));
+        }
+    }
+
+    @Override
+    public boolean imageExistsInBucket(String bucketName, String imageName) {
+        try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
+
+            GetObjectRequest request = GetObjectRequest.builder().bucket(bucketName).key(imageName).build();
+
+             s3.getObject(request);
+
+        }catch(NoSuchKeyException e){
+            return false;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return true;
     }
 }
