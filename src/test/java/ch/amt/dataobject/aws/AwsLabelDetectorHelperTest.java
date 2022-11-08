@@ -30,7 +30,7 @@ public class AwsLabelDetectorHelperTest {
     @Test
     void getLabelsShouldReturnLabelsTest() {
 
-        ILabelDetector labelDetectorHelper = AwsCloudClient.getInstance().getLabelDetector();
+        ILabelDetector labelDetectorHelper = new AwsLabelDetectorHelper();
 
         List<LabelObj> labels = labelDetectorHelper.getLabelsFromImage(BUCKET_NAME, IMAGE_KEY);
 
@@ -43,7 +43,7 @@ public class AwsLabelDetectorHelperTest {
 
     @Test
     void getLabelsWithWrongBucketNameTest() {
-        ILabelDetector labelDetectorHelper = AwsCloudClient.getInstance().getLabelDetector();
+        ILabelDetector labelDetectorHelper = new AwsLabelDetectorHelper();
 
         assertThrows(Exception.class, () -> {
             labelDetectorHelper.getLabelsFromImage("wrongBucketName", IMAGE_KEY);
@@ -52,7 +52,7 @@ public class AwsLabelDetectorHelperTest {
 
     @Test
     void getLabelsWithWrongImageKeyTest() {
-        ILabelDetector labelDetectorHelper = AwsCloudClient.getInstance().getLabelDetector();
+        ILabelDetector labelDetectorHelper = new AwsLabelDetectorHelper();
 
         assertThrows(Exception.class, () -> {
             labelDetectorHelper.getLabelsFromImage(BUCKET_NAME, "wrongImageKey");
