@@ -1,6 +1,7 @@
-package ch.amt.dataobject.aws;
+package ch.amt.dataobject;
 
-import ch.amt.dataobject.LabelObj;
+import ch.amt.dataobject.aws.AwsDataObjectHelperImpl;
+import ch.amt.dataobject.aws.AwsLabelDetectorHelper;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 
-public class AwsApp {
+public class App {
     static final private String bucketName = "amt.team02.diduno.education";
     static final private String imageKey = "image";
 
@@ -19,7 +20,7 @@ public class AwsApp {
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.out.println("Usage: java -jar aws-app.jar <imagePath>");
+            System.out.println("Parameter : image path");
             System.exit(1);
         }
 
@@ -27,15 +28,15 @@ public class AwsApp {
             byte[] fileContent = FileUtils.readFileToByteArray(new File(args[0]));
             String encodedString = Base64.getEncoder().encodeToString(fileContent);
 
-            AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
-            AwsLabelDetectorHelper awsLabelDetectorHelper = new AwsLabelDetectorHelper();
+            IDataObjectHelper dataObjectHelper = new AwsDataObjectHelperImpl();
+            ILabelDetector labelDetectorHelper = new AwsLabelDetectorHelper();
 
-            if (!awsDataObjectHelper.bucketExists(bucketName)) {
-                awsDataObjectHelper.createBucket(bucketName);
+            if (!dataObjectHelper.bucketExists(bucketName)) {
+                dataObjectHelper.createBucket(bucketName);
             }
 
-            awsDataObjectHelper.uploadImageInBucket(bucketName, imageKey, encodedString, getExtension(args[0]));
-            List<LabelObj> labels = awsLabelDetectorHelper.getLabelsFromImage(bucketName, imageKey);
+            dataObjectHelper.uploadImageInBucket(bucketName, imageKey, encodedString, getExtension(args[0]));
+            List<LabelObj> labels = labelDetectorHelper.getLabelsFromImage(bucketName, imageKey);
 
             System.out.println("Labels:");
             for (LabelObj label : labels) {
