@@ -1,5 +1,6 @@
 package ch.amt.dataobject;
 
+import ch.amt.dataobject.aws.AwsCloudClient;
 import org.junit.jupiter.api.Test;
 import software.amazon.awssdk.regions.Region;
 

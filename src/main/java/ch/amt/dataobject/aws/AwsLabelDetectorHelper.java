@@ -1,5 +1,7 @@
-package ch.amt.dataobject;
+package ch.amt.dataobject.aws;
 
+import ch.amt.dataobject.ILabelDetector;
+import ch.amt.dataobject.LabelObj;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
 import software.amazon.awssdk.services.rekognition.model.*;
 import java.util.LinkedList;
