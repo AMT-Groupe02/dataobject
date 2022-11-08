@@ -2,6 +2,20 @@
 Ce programme permet de détecter les objets dans une image.
 
 Les étapes ci-dessous sont à faire depuis le dossier racine du projet.
+
+## Collaborateurs
+Développeurs : Luca Coduri & Chloé Fontaine
+Professeur : Nicolas Glassey
+Assistant : Adrien Allemand
+
+## Prérequis
+Vous devez avoir au minimum Java8 et Maven installés sur votre machine.
+
+## Récupérer les dépendances
+```
+mvn dependency:resolve
+```
+
 ## Compilation
 La commande ci-dessous permet de compiler le projet sans lancer les tests unitaires.
 ```bash
@@ -18,7 +32,6 @@ java -jar target/dataobject-1.0-SNAPSHOT-jar-with-dependencies.jar <img_path>
 ## Tests
 Nous utilisons Junit 5 pour les tests unitaires. Pour lancer les tests, il faut lancer la commande suivante :
 ```bash
-mvn dependency:resolve
 export AWS_ACCESS_KEY_ID=<aws_access_key>
 export AWS_SECRET_ACCESS_KEY=<aws_secret_access_key>
 mvn test
