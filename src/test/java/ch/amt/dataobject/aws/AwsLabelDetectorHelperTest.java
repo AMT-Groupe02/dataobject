@@ -1,4 +1,6 @@
-package ch.amt.dataobject;
+package ch.amt.dataobject.aws;
+import ch.amt.dataobject.ILabelDetector;
+import ch.amt.dataobject.LabelObj;
 import ch.amt.dataobject.aws.AwsCloudClient;
 import ch.amt.dataobject.aws.AwsDataObjectHelperImpl;
 import org.junit.jupiter.api.BeforeAll;

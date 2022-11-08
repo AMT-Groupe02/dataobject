@@ -1,4 +1,4 @@
-package ch.amt.dataobject;
+package ch.amt.dataobject.aws;
 
 import ch.amt.dataobject.aws.AwsDataObjectHelperImpl;
 import org.junit.jupiter.api.AfterAll;
