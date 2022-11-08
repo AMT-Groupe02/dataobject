@@ -5,7 +5,7 @@ import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsPro
 import software.amazon.awssdk.regions.Region;
 
 public class AwsCloudClient implements ICloudClient {
-    static AwsCloudClient instance = null;
+    private static AwsCloudClient instance = null;
     AwsCredentialsProvider credentialsProvider;
     Region region;
     public static AwsCloudClient getInstance(){
@@ -17,7 +17,7 @@ public class AwsCloudClient implements ICloudClient {
 
     private AwsCloudClient() {
         credentialsProvider = EnvironmentVariableCredentialsProvider.create();
-        region = Region.EU_WEST_1;
+        region = Region.EU_WEST_2;
     }
 
     public AwsCredentialsProvider getCredentialsProvider() {
