@@ -17,18 +17,10 @@ public class AwsLabelDetectorHelper implements ILabelDetector {
 
             DetectLabelsResponse labelsResponse = rekClient.detectLabels(detectLabelsRequest);
             List<Label> labels = labelsResponse.labels();
-            System.out.println("Detected labels for the given photo");
-            for (Label label: labels) {
-                System.out.println(label.name() + ": " + label.confidence().toString());
-            }
 
             return awsLabelsToLabelObjs(labels);
 
-        } catch (RekognitionException e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
         }
-        return null;
     }
 
     private List<LabelObj> awsLabelsToLabelObjs(List<Label> labels) {
