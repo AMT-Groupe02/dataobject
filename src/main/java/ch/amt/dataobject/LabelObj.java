@@ -48,7 +48,7 @@ public class LabelObj {
             private double left;
             private double top;
 
-            BoundingBoxObj(double width, double height, double left, double top) {
+            public BoundingBoxObj(double width, double height, double left, double top) {
                 this.width = width;
                 this.height = height;
                 this.left = left;
