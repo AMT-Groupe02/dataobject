@@ -31,6 +31,8 @@ export AWS_SECRET_ACCESS_KEY=<aws_secret_access_key>
 java -jar target/dataobject-1.0-SNAPSHOT-jar-with-dependencies.jar <img_path>
 ```
 
+N'oubliez pas de modifier la variable d'environement avec vos accès aws.
+
 ## Tests
 Nous utilisons Junit 5 pour les tests unitaires. Pour lancer les tests, il faut lancer la commande suivante :
 ```bash
