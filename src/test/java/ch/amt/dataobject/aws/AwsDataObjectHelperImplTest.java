@@ -1,5 +1,6 @@
 package ch.amt.dataobject.aws;
 
+//TODO REVIEW remove unused import statement
 import ch.amt.dataobject.aws.AwsDataObjectHelperImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -10,10 +11,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AwsDataObjectHelperImplTest {
 
+    //TODO REVIEW remove all trace of Bucket logic. Everything must be a data object !
+    //TODO REVIEW A good place to declare the AwsDataObjectHelperImpl
+    //TODO REVIEW Set private variables as private !
     static String bucketName = "amt.team02.diduno.education";
 
     @BeforeEach
     void setUp() {
+        //TODO REVIEW same code in before each / after each / after all. Does it make sens ?
         AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
         if(awsDataObjectHelper.bucketExists(bucketName)){
             awsDataObjectHelper.deleteBucket(bucketName);
@@ -38,17 +43,25 @@ class AwsDataObjectHelperImplTest {
 
     @Test
     void createBucket() {
+        //TODO Review Why do you instantiate -again- the AwsDataObjectHelper (job already done by the setup method)
+        //TODO Review BDD code style (given, when, then)
         AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
         awsDataObjectHelper.createBucket(bucketName);
         assertTrue(awsDataObjectHelper.bucketExists(bucketName));
     }
 
+    //TODO REVIEW Sample Test Structure (presented during open review)
     @Test
-    void deleteBucket(){
-        AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
-        awsDataObjectHelper.createBucket(bucketName);
-        awsDataObjectHelper.deleteBucket(bucketName);
-        assertFalse(awsDataObjectHelper.bucketExists(bucketName));
+    void deleteObject_rootObjectExistsEmpty_Success(){
+        //given
+        //refer to setup method
+        assertTrue(this.awsDataObjectHelper.objectDoesExist(this.bucketName));
+
+        //when
+        this.awsDataObjectHelper.deleteObject(this.bucketName);
+
+        //then
+        assertFalse(this.awsDataObjectHelper.objectDoesExist(this.bucketName));
     }
 
     @Test
