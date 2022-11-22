@@ -1,4 +1,5 @@
 package ch.amt.dataobject.aws;
+
 import ch.amt.dataobject.ILabelDetector;
 import ch.amt.dataobject.LabelObj;
 import ch.amt.dataobject.aws.AwsCloudClient;
@@ -10,15 +11,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 public class AwsLabelDetectorHelperTest {
     static private String BUCKET_NAME = "amt.team02.diduno.education";
     static private String IMAGE_KEY = "test";
 
     @BeforeAll
     static void setUp() {
+
+        // TODO pas de tests concernant la labélisation d'une image en base64 (pas
+        // implémenté non plus)
+
         AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
-        if(!awsDataObjectHelper.bucketExists(BUCKET_NAME)){
+        if (!awsDataObjectHelper.bucketExists(BUCKET_NAME)) {
             awsDataObjectHelper.createBucket(BUCKET_NAME);
         }
 
