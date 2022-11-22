@@ -1,8 +1,6 @@
 package ch.amt.dataobject.aws;
 import ch.amt.dataobject.ILabelDetector;
 import ch.amt.dataobject.LabelObj;
-import ch.amt.dataobject.aws.AwsCloudClient;
-import ch.amt.dataobject.aws.AwsDataObjectHelperImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -11,9 +9,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class AwsLabelDetectorHelperTest {
-    static private String BUCKET_NAME = "amt.team02.diduno.education";
-    static private String IMAGE_KEY = "test";
+class AwsLabelDetectorHelperTest {
+    static private final String BUCKET_NAME = "amt.team02.diduno.education";
+    static private final String IMAGE_KEY = "test";
 
     @BeforeAll
     static void setUp() {
@@ -45,17 +43,13 @@ public class AwsLabelDetectorHelperTest {
     void getLabelsWithWrongBucketNameTest() {
         ILabelDetector labelDetectorHelper = new AwsLabelDetectorHelper();
 
-        assertThrows(Exception.class, () -> {
-            labelDetectorHelper.getLabelsFromImage("wrongBucketName", IMAGE_KEY);
-        });
+        assertThrows(Exception.class, () -> labelDetectorHelper.getLabelsFromImage("wrongBucketName", IMAGE_KEY));
     }
 
     @Test
     void getLabelsWithWrongImageKeyTest() {
         ILabelDetector labelDetectorHelper = new AwsLabelDetectorHelper();
 
-        assertThrows(Exception.class, () -> {
-            labelDetectorHelper.getLabelsFromImage(BUCKET_NAME, "wrongImageKey");
-        });
+        assertThrows(Exception.class, () -> labelDetectorHelper.getLabelsFromImage(BUCKET_NAME, "wrongImageKey"));
     }
 }

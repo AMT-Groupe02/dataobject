@@ -1,7 +1,6 @@
 package ch.amt.dataobject.aws;
 
 import ch.amt.dataobject.ICloudClient;
-import ch.amt.dataobject.ILabelDetector;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
