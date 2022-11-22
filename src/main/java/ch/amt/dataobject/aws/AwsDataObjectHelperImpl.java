@@ -29,10 +29,13 @@ public class AwsDataObjectHelperImpl implements IDataObjectHelper {
                     .build();
 
             WaiterResponse<HeadBucketResponse> waiterResponse = waiter.waitUntilBucketExists(bucketRequestWait);
+            //TODO REVIEW Remove all println (or convert it into log assertion)
             waiterResponse.matched().response().ifPresent(System.out::println);
             System.out.println(bucketName +" is ready");
 
         }catch (Exception e){
+            //TODO REVIEW Do not catch the whole world ! Be more specific.
+            //TODO REVIEW Exception management does not mean catch and print...
             e.printStackTrace();
         }
     }

@@ -50,18 +50,13 @@ class AwsDataObjectHelperImplTest {
         assertTrue(awsDataObjectHelper.bucketExists(bucketName));
     }
 
-    //TODO REVIEW Sample Test Structure (presented during open review)
+    //TODO REVIEW Refactor Test Structure (presented during open review)
     @Test
     void deleteObject_rootObjectExistsEmpty_Success(){
-        //given
-        //refer to setup method
-        assertTrue(this.awsDataObjectHelper.objectDoesExist(this.bucketName));
-
-        //when
-        this.awsDataObjectHelper.deleteObject(this.bucketName);
-
-        //then
-        assertFalse(this.awsDataObjectHelper.objectDoesExist(this.bucketName));
+        AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
+        awsDataObjectHelper.createBucket(bucketName);
+        awsDataObjectHelper.deleteBucket(bucketName);
+        assertFalse(awsDataObjectHelper.bucketExists(bucketName));
     }
 
     @Test
