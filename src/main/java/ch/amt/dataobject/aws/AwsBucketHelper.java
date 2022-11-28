@@ -5,11 +5,14 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.waiters.S3Waiter;
 
-public class AwsBucketHelper {
+public final class AwsBucketHelper {
     private static final AwsCloudClient awsClient = AwsCloudClient.getInstance();
 
+    private AwsBucketHelper() {
+    }
+
     public static void createBucket(String bucketName) {
-        try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
+        try (S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
 
             S3Waiter waiter = s3.waiter();
 
@@ -24,15 +27,15 @@ public class AwsBucketHelper {
 
             WaiterResponse<HeadBucketResponse> waiterResponse = waiter.waitUntilBucketExists(bucketRequestWait);
             waiterResponse.matched().response().ifPresent(System.out::println);
-            System.out.println(bucketName +" is ready");
+            System.out.println(bucketName + " is ready");
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void deleteBucket(String bucketName) {
-        try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
+        try (S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
 
             S3Waiter waiter = s3.waiter();
 
@@ -63,19 +66,19 @@ public class AwsBucketHelper {
 
             WaiterResponse<HeadBucketResponse> waiterResponse = waiter.waitUntilBucketNotExists(bucketRequestWait);
             waiterResponse.matched().response().ifPresent(System.out::println);
-            System.out.println(bucketName +" is deleted");
+            System.out.println(bucketName + " is deleted");
 
         }
     }
 
 
     public static boolean bucketExists(String bucketName) {
-        try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
+        try (S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
 
             ListBucketsResponse response = s3.listBuckets();
 
             for (Bucket bucket : response.buckets()) {
-                if(bucket.name().equals(bucketName)){
+                if (bucket.name().equals(bucketName)) {
                     return true;
                 }
             }

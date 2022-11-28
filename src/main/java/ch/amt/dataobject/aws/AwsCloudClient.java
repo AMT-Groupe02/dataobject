@@ -6,9 +6,9 @@ import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsPro
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.rekognition.RekognitionClient;
 
-public class AwsCloudClient implements ICloudClient {
+public final class AwsCloudClient implements ICloudClient {
     private static AwsCloudClient instance = null;
-    AwsCredentialsProvider credentialsProvider;
+    private AwsCredentialsProvider credentialsProvider;
     private RekognitionClient rekognitionClient = new RekognitionClient() {
         @Override
         public String serviceName() {
@@ -21,17 +21,18 @@ public class AwsCloudClient implements ICloudClient {
         }
     };
 
-    Region region;
-    public static AwsCloudClient getInstance(){
-        if(instance == null){
-            instance = new AwsCloudClient();
-        }
-        return instance;
-    }
+    private Region region;
 
     private AwsCloudClient() {
         credentialsProvider = EnvironmentVariableCredentialsProvider.create();
         region = Region.EU_WEST_2;
+    }
+
+    public static AwsCloudClient getInstance() {
+        if (instance == null) {
+            instance = new AwsCloudClient();
+        }
+        return instance;
     }
 
     public AwsCredentialsProvider getCredentialsProvider() {
