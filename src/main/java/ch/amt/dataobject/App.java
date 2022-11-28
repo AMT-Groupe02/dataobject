@@ -34,7 +34,9 @@ public class App {
 
             object.upload(encodedString);
 
-            List<LabelObj> labels = labelDetectorHelper.getLabelsFromImage(bucketName, imageKey + "." + getExtension(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            String url = object.getUrl();
+
+            List<LabelObj> labels = labelDetectorHelper.getLabelsFromImage(url, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 
             System.out.println("Labels:");
             for (LabelObj label : labels) {

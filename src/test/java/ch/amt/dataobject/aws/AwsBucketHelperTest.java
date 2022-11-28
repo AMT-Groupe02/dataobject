@@ -7,46 +7,46 @@ import static org.junit.jupiter.api.Assertions.*;
 @Disabled("Disabled because AWS don't like creating buckets again and again...")
 class AwsBucketHelperTest {
 
-    static String bucketName = "amt.team02.diduno.education";
+    static String BUCKET_NAME = "amt.team02.diduno.education";
 
     @BeforeEach
     void setUp() {
-        if(AwsBucketHelper.bucketExists(bucketName)){
-            AwsBucketHelper.deleteBucket(bucketName);
+        if(AwsBucketHelper.bucketExists(BUCKET_NAME)){
+            AwsBucketHelper.deleteBucket(BUCKET_NAME);
         }
     }
 
     @AfterEach
     void tearDown() {
-        if(AwsBucketHelper.bucketExists(bucketName)){
-            AwsBucketHelper.deleteBucket(bucketName);
+        if(AwsBucketHelper.bucketExists(BUCKET_NAME)){
+            AwsBucketHelper.deleteBucket(BUCKET_NAME);
         }
     }
 
     @AfterAll
     static void afterAll(){
-        if(!AwsBucketHelper.bucketExists(bucketName)){
-            AwsBucketHelper.createBucket(bucketName);
+        if(!AwsBucketHelper.bucketExists(BUCKET_NAME)){
+            AwsBucketHelper.createBucket(BUCKET_NAME);
         }
     }
 
     @Test
     void createBucket() {
-        AwsBucketHelper.createBucket(bucketName);
-        assertTrue(AwsBucketHelper.bucketExists(bucketName));
+        AwsBucketHelper.createBucket(BUCKET_NAME);
+        assertTrue(AwsBucketHelper.bucketExists(BUCKET_NAME));
     }
 
     @Test
     void deleteBucket(){
-        AwsBucketHelper.createBucket(bucketName);
-        AwsBucketHelper.deleteBucket(bucketName);
-        assertFalse(AwsBucketHelper.bucketExists(bucketName));
+        AwsBucketHelper.createBucket(BUCKET_NAME);
+        AwsBucketHelper.deleteBucket(BUCKET_NAME);
+        assertFalse(AwsBucketHelper.bucketExists(BUCKET_NAME));
     }
 
     @Test
     void bucketExists() {
-        assertFalse(AwsBucketHelper.bucketExists(bucketName));
-        AwsBucketHelper.createBucket(bucketName);
-        assertTrue(AwsBucketHelper.bucketExists(bucketName));
+        assertFalse(AwsBucketHelper.bucketExists(BUCKET_NAME));
+        AwsBucketHelper.createBucket(BUCKET_NAME);
+        assertTrue(AwsBucketHelper.bucketExists(BUCKET_NAME));
     }
 }
