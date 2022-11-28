@@ -86,6 +86,10 @@ public class AwsDataObject implements IDataObject {
 
     }
 
+    /**
+     * Creates a presigned URL for the file that lasts for 60 minutes
+     * @return
+     */
     public String getUrl() {
         if (!AwsBucketHelper.bucketExists(bucketName) || !exists()) {
             throw new RuntimeException("File does not exist");
