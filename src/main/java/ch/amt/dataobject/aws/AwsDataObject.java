@@ -1,5 +1,6 @@
 package ch.amt.dataobject.aws;
 
+import ch.amt.dataobject.DataObjectNotFoundException;
 import ch.amt.dataobject.IDataObject;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
@@ -67,9 +68,12 @@ public class AwsDataObject implements IDataObject {
         }
     }
 
+    /**
+     * @throws DataObjectNotFoundException if the file does not exist
+     */
     public void delete() {
         if (!AwsBucketHelper.bucketExists(bucketName) || !exists()) {
-            throw new RuntimeException("File does not exist");
+            throw new DataObjectNotFoundException();
         }
         try (S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
