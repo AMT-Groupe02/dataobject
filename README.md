@@ -28,7 +28,7 @@ Une fois le projet compilé il est possible de lancer le programme avec la comma
 ```bash
 export AWS_ACCESS_KEY_ID=<aws_access_key>
 export AWS_SECRET_ACCESS_KEY=<aws_secret_access_key>
-java -jar target/dataobject-1.0-SNAPSHOT-jar-with-dependencies.jar <img_path>
+java -jar target/dataobject-1.0-SNAPSHOT-jar-with-dependencies.jar <img_path> <max labels> <min confidence>
 ```
 
 N'oubliez pas de modifier la variable d'environement avec vos accès aws.
