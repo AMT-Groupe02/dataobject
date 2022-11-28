@@ -10,16 +10,17 @@ import java.util.Base64;
 import java.util.List;
 
 public class App {
-    static final private String bucketName = "amt.team02.diduno.education";
-    static final private String imageKey = "image";
+    private static final String BUCKET_NAME = "amt.team02.diduno.education";
+    private static final String IMAGE_KEY = "image";
+    private static final int ARGS_LEN = 3;
 
-    public static String getExtension(String filename) {
+    private static String getExtension(String filename) {
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
 
 
-    public static void main(String[] args) {
-        if (args.length != 3) {
+    public static void main(final String[] args) {
+        if (args.length != ARGS_LEN) {
             System.out.println("Parameter : <image path> <max labels> <min confidence>");
             System.exit(1);
         }
@@ -28,7 +29,7 @@ public class App {
             byte[] fileContent = FileUtils.readFileToByteArray(new File(args[0]));
             String encodedString = Base64.getEncoder().encodeToString(fileContent);
 
-            IDataObject object = new AwsDataObject(bucketName + "/" + imageKey + "." + getExtension(args[0]));
+            IDataObject object = new AwsDataObject(BUCKET_NAME + "/" + IMAGE_KEY + "." + getExtension(args[0]));
 
             ILabelDetector labelDetectorHelper = new AwsLabelDetectorHelper();
 

@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.time.Duration;
 
 public class AwsDataObject implements IDataObject {
-    private static final AwsCloudClient awsClient = AwsCloudClient.getInstance();
+    private static final AwsCloudClient AWS_CLIENT = AwsCloudClient.getInstance();
     private String path;
     private String bucketName;
 
@@ -26,17 +26,25 @@ public class AwsDataObject implements IDataObject {
         this.path = path.substring(path.indexOf("/") + 1);
     }
 
+    /**
+     * Upload data to a bucket from base64 encoded string
+     * @param dataBase64
+     */
     public void upload(String dataBase64) {
         byte[] bytes = java.util.Base64.getDecoder().decode(dataBase64);
         upload(bytes);
     }
 
+    /**
+     * Upload data to a bucket from byte array
+     * @param dataBytes
+     */
     public void upload(byte[] dataBytes) {
         if (!AwsBucketHelper.bucketExists(bucketName)) {
             AwsBucketHelper.createBucket(bucketName);
         }
 
-        try (S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
+        try (S3Client s3 = S3Client.builder().credentialsProvider(AWS_CLIENT.getCredentialsProvider()).region(AWS_CLIENT.getRegion()).build()) {
 
             InputStream fis = new ByteArrayInputStream(dataBytes);
 
@@ -54,12 +62,16 @@ public class AwsDataObject implements IDataObject {
         }
     }
 
+    /**
+     * Downloads the current object into a byte array
+     * @return byte array
+     */
     public byte[] download() throws IOException {
         if (!AwsBucketHelper.bucketExists(bucketName) || !exists()) {
             throw new RuntimeException("File does not exist");
         }
 
-        try (S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
+        try (S3Client s3 = S3Client.builder().credentialsProvider(AWS_CLIENT.getCredentialsProvider()).region(AWS_CLIENT.getRegion()).build()) {
             GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                     .bucket(bucketName)
                     .key(path)
@@ -69,13 +81,14 @@ public class AwsDataObject implements IDataObject {
     }
 
     /**
+     * Deletes the current object
      * @throws DataObjectNotFoundException if the file does not exist
      */
     public void delete() {
         if (!AwsBucketHelper.bucketExists(bucketName) || !exists()) {
             throw new DataObjectNotFoundException();
         }
-        try (S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
+        try (S3Client s3 = S3Client.builder().credentialsProvider(AWS_CLIENT.getCredentialsProvider()).region(AWS_CLIENT.getRegion()).build()) {
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                     .bucket(bucketName)
                     .key(path)
@@ -91,8 +104,10 @@ public class AwsDataObject implements IDataObject {
      * @return
      */
     public String getUrl() {
+        final int EXPIRATION_TIME = 60;
+
         if (!AwsBucketHelper.bucketExists(bucketName) || !exists()) {
-            throw new RuntimeException("File does not exist");
+            throw new DataObjectNotFoundException();
         }
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
@@ -101,21 +116,25 @@ public class AwsDataObject implements IDataObject {
                 .build();
 
         GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(60))
+                .signatureDuration(Duration.ofMinutes(EXPIRATION_TIME))
                 .getObjectRequest(getObjectRequest)
                 .build();
 
         S3Presigner presigner = S3Presigner.builder()
-                .credentialsProvider(awsClient.getCredentialsProvider())
-                .region(awsClient.getRegion())
+                .credentialsProvider(AWS_CLIENT.getCredentialsProvider())
+                .region(AWS_CLIENT.getRegion())
                 .build();
 
         PresignedGetObjectRequest presignedGetObjectRequest = presigner.presignGetObject(getObjectPresignRequest);
         return presignedGetObjectRequest.url().toString();
     }
 
+    /**
+     * Checks if the current object exists
+     * @return true if the object exists, false otherwise
+     */
     public boolean exists() {
-        try (S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()) {
+        try (S3Client s3 = S3Client.builder().credentialsProvider(AWS_CLIENT.getCredentialsProvider()).region(AWS_CLIENT.getRegion()).build()) {
 
             GetObjectRequest request = GetObjectRequest.builder().bucket(bucketName).key(path).build();
             s3.getObject(request);
