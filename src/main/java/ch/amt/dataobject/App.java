@@ -19,8 +19,8 @@ public class App {
 
 
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Parameter : image path");
+        if (args.length != 3) {
+            System.out.println("Parameter : <image path> <max labels> <min confidence>");
             System.exit(1);
         }
 
@@ -36,7 +36,7 @@ public class App {
             }
 
             dataObjectHelper.uploadImageInBucket(bucketName, imageKey, encodedString, getExtension(args[0]));
-            List<LabelObj> labels = labelDetectorHelper.getLabelsFromImage(bucketName, imageKey);
+            List<LabelObj> labels = labelDetectorHelper.getLabelsFromImage(bucketName, imageKey, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 
             System.out.println("Labels:");
             for (LabelObj label : labels) {
@@ -45,6 +45,8 @@ public class App {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("max labels and min confidence must be integers");
         }
 
     }
