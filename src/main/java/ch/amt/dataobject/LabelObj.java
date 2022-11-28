@@ -1,13 +1,12 @@
 package ch.amt.dataobject;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class LabelObj {
-    private String name;
-    private float confidence;
-    private List<InstanceObj> instances;
-    private List<String> parents;
+    private final String name;
+    private final float confidence;
+    private final List<InstanceObj> instances;
+    private final List<String> parents;
 
     public LabelObj(String name, float confidence, List<InstanceObj> instances, List<String> parents) {
         this.name = name;
@@ -33,8 +32,8 @@ public class LabelObj {
     }
 
     public static class InstanceObj {
-        private double confidence;
-        private BoundingBoxObj boundingBox;
+        private final double confidence;
+        private final BoundingBoxObj boundingBox;
 
         public InstanceObj(double confidence, BoundingBoxObj boundingBox) {
             this.confidence = confidence;
@@ -43,10 +42,10 @@ public class LabelObj {
 
 
         public static class BoundingBoxObj {
-            private double width;
-            private double height;
-            private double left;
-            private double top;
+            private final double width;
+            private final double height;
+            private final double left;
+            private final double top;
 
             public BoundingBoxObj(double width, double height, double left, double top) {
                 this.width = width;
