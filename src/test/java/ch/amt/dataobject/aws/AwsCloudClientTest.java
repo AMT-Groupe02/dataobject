@@ -1,6 +1,5 @@
 package ch.amt.dataobject.aws;
 
-import ch.amt.dataobject.aws.AwsCloudClient;
 import org.junit.jupiter.api.Test;
 import software.amazon.awssdk.regions.Region;
 
@@ -18,7 +17,7 @@ class AwsCloudClientTest {
     @Test
     void regionIsEUWEST1(){
         AwsCloudClient client = AwsCloudClient.getInstance();
-        assertEquals(client.getRegion(), Region.EU_WEST_2);
+        assertEquals(Region.EU_WEST_2, client.getRegion());
     }
 
     @Test
