@@ -15,7 +15,7 @@ class AwsLabelDetectorHelperTest {
 
     @BeforeAll
     static void setUp() {
-        AwsDataObjectHelperImpl awsDataObjectHelper = new AwsDataObjectHelperImpl();
+        AwsDataObjectBuilder awsDataObjectHelper = new AwsDataObjectBuilder();
         if(!awsDataObjectHelper.bucketExists(BUCKET_NAME)){
             awsDataObjectHelper.createBucket(BUCKET_NAME);
         }

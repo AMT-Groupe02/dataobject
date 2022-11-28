@@ -1,20 +1,13 @@
 package ch.amt.dataobject.aws;
 
-import ch.amt.dataobject.IDataObjectHelper;
-import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.waiters.S3Waiter;
 
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
-
-public class AwsDataObjectHelperImpl implements IDataObjectHelper {
+public class AwsBucketHelper {
     private static final AwsCloudClient awsClient = AwsCloudClient.getInstance();
-    private final String bucketName = "amt.team02.diduno.education";
+
     public static void createBucket(String bucketName) {
         try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
 
@@ -90,73 +83,4 @@ public class AwsDataObjectHelperImpl implements IDataObjectHelper {
         }
         return false;
     }
-
-    @Override
-    public String getUrl(String filePath) {
-        return null;
-    }
-
-    @Override
-    public void deleteFile(String filePath) {
-
-    }
-
-    @Override
-    public void sendFile(String filePath, String base64Data) {
-
-
-        try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
-
-            byte[] bI = java.util.Base64.getDecoder().decode(base64Data);
-            InputStream fis = new ByteArrayInputStream(bI);
-
-
-            s3.putObject(PutObjectRequest.builder().bucket(bucketName).key(filePath)
-                            .contentLength((long) bI.length)
-                            .build(),
-                    RequestBody.fromInputStream(fis, bI.length));
-        }
-    }
-
-    @Override
-    public boolean fileExists(String filePath) {
-        try(S3Client s3 = S3Client.builder().credentialsProvider(awsClient.getCredentialsProvider()).region(awsClient.getRegion()).build()){
-
-            GetObjectRequest request = GetObjectRequest.builder().bucket(bucketName).key(filePath).build();
-
-            s3.getObject(request);
-
-        }catch(NoSuchKeyException e){
-            return false;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            // TODO créer une exception custom pour chaque type d'erreur
-        }
-        return true;
-    }
-
-    public static void createFolder(String[] args) {
-        String bucketName = "nam-public-images";
-        String folderName = "asia/vietnam/";
-
-        S3Client client = S3Client.builder().build();
-
-        PutObjectRequest request = PutObjectRequest.builder()
-                .bucket(bucketName).key(folderName).build();
-
-
-        client.putObject(request, RequestBody.empty());
-
-        S3Waiter waiter = client.waiter();
-        HeadObjectRequest requestWait = HeadObjectRequest.builder()
-                .bucket(bucketName).key(folderName).build();
-
-        WaiterResponse<HeadObjectResponse> waiterResponse = waiter.waitUntilObjectExists(requestWait);
-
-        waiterResponse.matched().response().ifPresent(System.out::println);
-
-        System.out.println("Folder " + folderName + " is ready.");
-    }
-
 }

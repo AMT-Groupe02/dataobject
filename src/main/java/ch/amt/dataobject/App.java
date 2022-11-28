@@ -1,6 +1,6 @@
 package ch.amt.dataobject;
 
-import ch.amt.dataobject.aws.AwsDataObjectHelperImpl;
+import ch.amt.dataobject.aws.AwsDataObject;
 import ch.amt.dataobject.aws.AwsLabelDetectorHelper;
 import org.apache.commons.io.FileUtils;
 
@@ -28,15 +28,13 @@ public class App {
             byte[] fileContent = FileUtils.readFileToByteArray(new File(args[0]));
             String encodedString = Base64.getEncoder().encodeToString(fileContent);
 
-            IDataObjectHelper dataObjectHelper = new AwsDataObjectHelperImpl();
+            IDataObject object = new AwsDataObject(bucketName + "/" + imageKey + "." + getExtension(args[0]));
+
             ILabelDetector labelDetectorHelper = new AwsLabelDetectorHelper();
 
-            if (!dataObjectHelper.bucketExists(bucketName)) {
-                dataObjectHelper.createBucket(bucketName);
-            }
+            object.upload(encodedString);
 
-            dataObjectHelper.uploadImageInBucket(bucketName, imageKey, encodedString, getExtension(args[0]));
-            List<LabelObj> labels = labelDetectorHelper.getLabelsFromImage(bucketName, imageKey);
+            List<LabelObj> labels = labelDetectorHelper.getLabelsFromImage(bucketName, imageKey + "." + getExtension(args[0]));
 
             System.out.println("Labels:");
             for (LabelObj label : labels) {
